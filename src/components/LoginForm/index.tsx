@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { useOnGoCargas } from "../../hooks/useOnGoCargas";
+import { useOnGo } from "../../hooks/useOnGo";
 
 const schema = z.object({
   login: z.string().min(8, "Mínimo de 8 caracteres"),
@@ -17,7 +17,7 @@ const schema = z.object({
 type FormSchema = z.infer<typeof schema>;
 
 export function LoginForm() {
-  const { login, user, setUser } = useOnGoCargas();
+  const { login, user, setUser } = useOnGo();
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 

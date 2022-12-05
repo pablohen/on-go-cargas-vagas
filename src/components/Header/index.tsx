@@ -12,12 +12,12 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import { useOnGoCargas } from "../../hooks/useOnGoCargas";
+import { useOnGo } from "../../hooks/useOnGo";
 
 interface Props {}
 
 export function Header({}: Props) {
-  const { user, logout } = useOnGoCargas();
+  const { user, logout } = useOnGo();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   function handleLogout() {

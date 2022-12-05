@@ -29,7 +29,7 @@ interface GetTerminal {
   id: string;
 }
 
-export function useOnGoCargas() {
+export function useOnGo() {
   const [user, setUser] = useLocalStorage<Auth | null>("user", null);
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();

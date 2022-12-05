@@ -2,14 +2,10 @@ import { Box, Stack, Typography } from "@mui/material";
 import { GridFilterModel } from "@mui/x-data-grid";
 import { useState } from "react";
 import { TerminalTable } from "../../components/TerminalTable";
-import {
-  initialState,
-  PaginationOptions,
-  useOnGoCargas,
-} from "../../hooks/useOnGoCargas";
+import { initialState, PaginationOptions, useOnGo } from "../../hooks/useOnGo";
 
 export function TerminalList() {
-  const { getTerminals } = useOnGoCargas();
+  const { getTerminals } = useOnGo();
   const [options, setOptions] = useState<PaginationOptions>(initialState);
   const terminalsQuery = getTerminals(options);
 

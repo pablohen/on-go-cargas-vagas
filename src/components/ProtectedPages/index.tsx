@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { Header } from "../../components/Header";
-import { useOnGoCargas } from "../../hooks/useOnGoCargas";
+import { useOnGo } from "../../hooks/useOnGo";
 
 export function ProtectedPages() {
-  const { user, logout } = useOnGoCargas();
+  const { user, logout } = useOnGo();
 
   useEffect(() => {
     if (!user) {
