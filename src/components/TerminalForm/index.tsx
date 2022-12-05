@@ -195,8 +195,6 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                         <TextField
                           id={field.name}
                           label="CPF"
-                          value={field.value}
-                          onChange={field.onChange}
                           error={Boolean(fieldState.error?.message)}
                           helperText={fieldState.error?.message}
                         />
@@ -219,8 +217,6 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                         <TextField
                           id={field.name}
                           label="CNPJ"
-                          value={field.value}
-                          onChange={field.onChange}
                           error={Boolean(fieldState.error?.message)}
                           helperText={fieldState.error?.message}
                         />
@@ -286,8 +282,6 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                       <TextField
                         id={field.name}
                         label="CEP"
-                        value={field.value}
-                        onChange={field.onChange}
                         error={Boolean(fieldState.error?.message)}
                         helperText={fieldState.error?.message}
                       />
