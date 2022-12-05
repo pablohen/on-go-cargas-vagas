@@ -11,8 +11,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
-import { useCallback, useEffect, useState } from "react";
+import { GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import InputMask from "react-input-mask";
 import { z } from "zod";
@@ -75,11 +75,10 @@ interface Props {
 }
 
 export function TerminalForm({ data, loading, onValid }: Props) {
-  const [map, setMap] = useState(null);
-  const [search, setSearch] = useState("");
+  const [cep, setCep] = useState("");
 
   const { getAddressByCep } = useBrasilApi();
-  const addressQuery = getAddressByCep({ cep: search });
+  const addressQuery = getAddressByCep({ cep: cep });
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(schema),
@@ -93,31 +92,14 @@ export function TerminalForm({ data, loading, onValid }: Props) {
     googleMapsApiKey: import.meta.env.VITE_MAPS_API_KEY,
   });
 
-  const mapContainerStyle = {
-    width: "100%",
-    height: "400px",
-    borderRadius: "8px",
-  };
-
   const center = {
     lat: formData.Endereco.lat ?? 0,
     lng: formData.Endereco.lng ?? 0,
   };
 
-  const onLoad = useCallback(function callback(map: any) {
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
-
-    setMap(map);
-  }, []);
-
-  const onUnmount = useCallback(function callback() {
-    setMap(null);
-  }, []);
-
   useEffect(() => {
     if (formData.Endereco.cep.at(-1) !== "_") {
-      setSearch(formData.Endereco.cep);
+      setCep(formData.Endereco.cep);
     }
   }, [formData.Endereco.cep]);
 
@@ -127,19 +109,11 @@ export function TerminalForm({ data, loading, onValid }: Props) {
       form.setValue("Endereco.bairro", addressQuery.data.neighborhood);
       form.setValue(
         "Endereco.lat",
-        Number(
-          formData.Endereco.lat ??
-            addressQuery.data.location.coordinates.latitude ??
-            0
-        )
+        Number(addressQuery.data.location.coordinates.latitude ?? 0)
       );
       form.setValue(
         "Endereco.lng",
-        Number(
-          formData.Endereco.lng ??
-            addressQuery.data.location.coordinates.longitude ??
-            0
-        )
+        Number(addressQuery.data.location.coordinates.longitude ?? 0)
       );
       form.setValue("Endereco.cidade", addressQuery.data.city);
       form.setValue("Endereco.estado", addressQuery.data.state);
@@ -504,13 +478,15 @@ export function TerminalForm({ data, loading, onValid }: Props) {
             <Grid item xs={12} lg={6}>
               {isLoaded && (
                 <GoogleMap
-                  mapContainerStyle={mapContainerStyle}
+                  mapContainerStyle={{
+                    width: "100%",
+                    height: "400px",
+                    borderRadius: "8px",
+                  }}
                   zoom={14}
-                  onLoad={onLoad}
-                  onUnmount={onUnmount}
                   center={center}
                 >
-                  <Marker position={center} title={formData.nome} />
+                  <MarkerF position={center} title={formData.nome} />
                 </GoogleMap>
               )}
             </Grid>
