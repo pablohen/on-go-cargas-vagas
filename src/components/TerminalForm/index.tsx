@@ -79,7 +79,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
   const [search, setSearch] = useState("");
 
   const { getAddressByCep } = useBrasilApi();
-  const addressQuery = getAddressByCep(search);
+  const addressQuery = getAddressByCep({ cep: search });
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(schema),
