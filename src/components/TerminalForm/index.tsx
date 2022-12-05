@@ -14,6 +14,7 @@ import {
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import InputMask from "react-input-mask";
 import { z } from "zod";
 import { useBrasilApi } from "../../hooks/useBrasilApi";
 import { UpsertTerminal } from "../../types/UpsertTerminal";
@@ -115,7 +116,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
   }, []);
 
   useEffect(() => {
-    if (formData.Endereco.cep.length >= 8) {
+    if (formData.Endereco.cep.at(-1) !== "_") {
       setSearch(formData.Endereco.cep);
     }
   }, [formData.Endereco.cep]);
@@ -216,14 +217,21 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                     name="CPF"
                     control={form.control}
                     render={({ field, fieldState }) => (
-                      <TextField
-                        id={field.name}
-                        label="CPF"
+                      <InputMask
+                        mask="999.999.999-99"
+                        placeholder="000.000.000-00"
                         value={field.value}
                         onChange={field.onChange}
-                        error={Boolean(fieldState.error?.message)}
-                        helperText={fieldState.error?.message}
-                      />
+                      >
+                        <TextField
+                          id={field.name}
+                          label="CPF"
+                          value={field.value}
+                          onChange={field.onChange}
+                          error={Boolean(fieldState.error?.message)}
+                          helperText={fieldState.error?.message}
+                        />
+                      </InputMask>
                     )}
                   />
                 )}
@@ -233,14 +241,21 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                     name="CNPJ"
                     control={form.control}
                     render={({ field, fieldState }) => (
-                      <TextField
-                        id={field.name}
-                        label="CNPJ"
+                      <InputMask
+                        mask="99.999.999/9999-99"
+                        placeholder="00.000.000/0000-00"
                         value={field.value}
                         onChange={field.onChange}
-                        error={Boolean(fieldState.error?.message)}
-                        helperText={fieldState.error?.message}
-                      />
+                      >
+                        <TextField
+                          id={field.name}
+                          label="CNPJ"
+                          value={field.value}
+                          onChange={field.onChange}
+                          error={Boolean(fieldState.error?.message)}
+                          helperText={fieldState.error?.message}
+                        />
+                      </InputMask>
                     )}
                   />
                 )}
@@ -293,14 +308,21 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                   name="Endereco.cep"
                   control={form.control}
                   render={({ field, fieldState }) => (
-                    <TextField
-                      id={field.name}
-                      label="CEP"
+                    <InputMask
+                      mask="99999-999"
+                      placeholder="00000-000"
                       value={field.value}
                       onChange={field.onChange}
-                      error={Boolean(fieldState.error?.message)}
-                      helperText={fieldState.error?.message}
-                    />
+                    >
+                      <TextField
+                        id={field.name}
+                        label="CEP"
+                        value={field.value}
+                        onChange={field.onChange}
+                        error={Boolean(fieldState.error?.message)}
+                        helperText={fieldState.error?.message}
+                      />
+                    </InputMask>
                   )}
                 />
 
