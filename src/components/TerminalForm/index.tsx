@@ -11,13 +11,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { GoogleMap, MarkerF, useJsApiLoader } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import InputMask from "react-input-mask";
 import { z } from "zod";
 import { useBrasilApi } from "../../hooks/useBrasilApi";
 import { UpsertTerminal } from "../../types/UpsertTerminal";
+import TerminalMap from "../TerminalMap";
 
 const schema = z.object({
   Id: z.number(),
@@ -86,11 +86,6 @@ export function TerminalForm({ data, loading, onValid }: Props) {
   });
 
   const formData = form.watch();
-
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: import.meta.env.VITE_MAPS_API_KEY,
-  });
 
   const center = {
     lat: formData.Endereco.lat ?? 0,
@@ -476,19 +471,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
             </Grid>
 
             <Grid item xs={12} lg={6}>
-              {isLoaded && (
-                <GoogleMap
-                  mapContainerStyle={{
-                    width: "100%",
-                    height: "400px",
-                    borderRadius: "8px",
-                  }}
-                  zoom={14}
-                  center={center}
-                >
-                  <MarkerF position={center} title={formData.nome} />
-                </GoogleMap>
-              )}
+              <TerminalMap center={center} title={formData.nome} />
             </Grid>
 
             <Grid item xs={12}>
