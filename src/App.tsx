@@ -1,4 +1,9 @@
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import {
+  Container,
+  CssBaseline,
+  ThemeProvider,
+  Typography,
+} from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { SnackbarProvider } from "notistack";
@@ -33,9 +38,19 @@ function App() {
 
                 <Route path="terminals" element={<ProtectedPages />}>
                   <Route path="" element={<TerminalList />} />
-                  <Route path="create" element={<TerminalCreate />} />
-                  <Route path=":id" element={<TerminalEdit />} />
+                  <Route path="new" element={<TerminalCreate />} />
+                  <Route path="edit/:id" element={<TerminalEdit />} />
                 </Route>
+
+                <Route
+                  path="*"
+                  element={
+                    <Container>
+                      <Typography variant="h4">404</Typography>
+                      <Typography variant="h6">Not found</Typography>
+                    </Container>
+                  }
+                />
               </Route>
             </Routes>
           </BrowserRouter>

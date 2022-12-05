@@ -39,7 +39,7 @@ export function TerminalTable({
     return (
       <Tooltip title="Editar">
         <IconButton
-          onClick={() => navigate(`./${rowData.id}`)}
+          onClick={() => navigate(`./edit/${rowData.id}`)}
           aria-label="edit"
           data-testid="edit-button"
         >
