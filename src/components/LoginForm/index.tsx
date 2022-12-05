@@ -16,6 +16,11 @@ const schema = z.object({
 
 type FormSchema = z.infer<typeof schema>;
 
+const initialValues: FormSchema = {
+  login: "",
+  password: "",
+};
+
 export function LoginForm() {
   const { login, user, setUser } = useOnGo();
   const { enqueueSnackbar } = useSnackbar();
@@ -25,7 +30,7 @@ export function LoginForm() {
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(schema),
-    mode: "all",
+    defaultValues: initialValues,
   });
 
   function handleSubmit(data: FormSchema, e: any) {
