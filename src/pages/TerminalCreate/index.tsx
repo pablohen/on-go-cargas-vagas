@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Container, Stack, Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { FormSchema, TerminalForm } from "../../components/TerminalForm";
 import { useOnGo } from "../../hooks/useOnGo";
@@ -37,15 +37,17 @@ export function TerminalCreate() {
   }
 
   return (
-    <Box p="1rem">
-      <Stack spacing="1rem">
-        <Typography variant="h4">Novo terminal</Typography>
+    <Container>
+      <Box pt="2rem" pb="1rem">
+        <Stack spacing="2rem">
+          <Typography variant="h4">Novo terminal</Typography>
 
-        <TerminalForm
-          loading={createMutation.isLoading}
-          onValid={handleOnValid}
-        />
-      </Stack>
-    </Box>
+          <TerminalForm
+            loading={createMutation.isLoading}
+            onValid={handleOnValid}
+          />
+        </Stack>
+      </Box>
+    </Container>
   );
 }

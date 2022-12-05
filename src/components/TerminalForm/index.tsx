@@ -4,7 +4,6 @@ import {
   Box,
   FormControl,
   FormControlLabel,
-  FormLabel,
   Grid,
   Radio,
   RadioGroup,
@@ -96,6 +95,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
   const mapContainerStyle = {
     width: "100%",
     height: "400px",
+    borderRadius: "8px",
   };
 
   const center = {
@@ -173,92 +173,91 @@ export function TerminalForm({ data, loading, onValid }: Props) {
   return (
     <Box>
       <form onSubmit={form.handleSubmit(onValid, console.log)}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} lg={6}>
-            <Stack gap="1rem">
-              <Controller
-                name="Id"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    id={field.name}
-                    label="Id"
-                    value={field.value}
-                    onChange={field.onChange}
-                    error={Boolean(fieldState.error?.message)}
-                    helperText={fieldState.error?.message}
-                  />
-                )}
-              />
+        <Stack gap="2rem">
+          <Grid container spacing={2}>
+            <Grid item xs={12} lg={6}>
+              <Stack gap="1rem">
+                <Typography fontWeight={700}>Dados do Responsável</Typography>
 
-              <Controller
-                name="idDonoCarga"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    id={field.name}
-                    label="idDonoCarga"
-                    value={field.value}
-                    onChange={field.onChange}
-                    error={Boolean(fieldState.error?.message)}
-                    helperText={fieldState.error?.message}
-                  />
-                )}
-              />
-
-              <Controller
-                name="nome"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    id={field.name}
-                    label="Nome"
-                    value={field.value}
-                    onChange={field.onChange}
-                    error={Boolean(fieldState.error?.message)}
-                    helperText={fieldState.error?.message}
-                  />
-                )}
-              />
-
-              <Controller
-                name="TipoPessoa"
-                control={form.control}
-                render={({ field }) => (
-                  <FormControl>
-                    <FormLabel id={field.name}>Tipo de pessoa</FormLabel>
-
-                    <RadioGroup
-                      aria-labelledby={field.name}
-                      defaultValue={1}
-                      name={field.name}
-                      row
-                      value={field.value}
-                      onChange={field.onChange}
-                    >
-                      <FormControlLabel
-                        value={1}
-                        control={<Radio />}
-                        label="pessoa física"
-                      />
-                      <FormControlLabel
-                        value={2}
-                        control={<Radio />}
-                        label="pessoa jurídica"
-                      />
-                    </RadioGroup>
-                  </FormControl>
-                )}
-              />
-
-              {formData.TipoPessoa == 1 && (
                 <Controller
-                  name="CPF"
+                  name="TipoPessoa"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormControl>
+                      <RadioGroup
+                        aria-labelledby={field.name}
+                        defaultValue={1}
+                        name={field.name}
+                        value={field.value}
+                        onChange={field.onChange}
+                        row
+                        // fix misaligned items
+                        sx={{
+                          mb: "2px",
+                        }}
+                      >
+                        <FormControlLabel
+                          value={1}
+                          control={<Radio />}
+                          label="pessoa física"
+                        />
+                        <FormControlLabel
+                          value={2}
+                          control={<Radio />}
+                          label="pessoa jurídica"
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                  )}
+                />
+
+                {formData.TipoPessoa == 1 && (
+                  <Controller
+                    name="CPF"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <TextField
+                        id={field.name}
+                        label="CPF"
+                        value={field.value}
+                        onChange={field.onChange}
+                        error={Boolean(fieldState.error?.message)}
+                        helperText={fieldState.error?.message}
+                      />
+                    )}
+                  />
+                )}
+
+                {formData.TipoPessoa == 2 && (
+                  <Controller
+                    name="CNPJ"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <TextField
+                        id={field.name}
+                        label="CNPJ"
+                        value={field.value}
+                        onChange={field.onChange}
+                        error={Boolean(fieldState.error?.message)}
+                        helperText={fieldState.error?.message}
+                      />
+                    )}
+                  />
+                )}
+              </Stack>
+            </Grid>
+
+            <Grid item xs={12} lg={6}>
+              <Stack gap="1rem">
+                <Typography fontWeight={700}>Dados do Terminal</Typography>
+
+                <Controller
+                  name="nome"
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <TextField
                       id={field.name}
-                      label="CPF"
+                      label="Nome"
                       value={field.value}
                       onChange={field.onChange}
                       error={Boolean(fieldState.error?.message)}
@@ -266,16 +265,14 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                     />
                   )}
                 />
-              )}
 
-              {formData.TipoPessoa == 2 && (
                 <Controller
-                  name="CNPJ"
+                  name="InscricaoEstadual"
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <TextField
                       id={field.name}
-                      label="CNPJ"
+                      label="Inscrição estadual"
                       value={field.value}
                       onChange={field.onChange}
                       error={Boolean(fieldState.error?.message)}
@@ -283,240 +280,231 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                     />
                   )}
                 />
-              )}
-
-              <Controller
-                name="InscricaoEstadual"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    id={field.name}
-                    label="Inscrição estadual"
-                    value={field.value}
-                    onChange={field.onChange}
-                    error={Boolean(fieldState.error?.message)}
-                    helperText={fieldState.error?.message}
-                  />
-                )}
-              />
-
-              <Typography>Endereço</Typography>
-
-              <Controller
-                name="Endereco.cep"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    id={field.name}
-                    label="CEP"
-                    value={field.value}
-                    onChange={field.onChange}
-                    error={Boolean(fieldState.error?.message)}
-                    helperText={fieldState.error?.message}
-                  />
-                )}
-              />
-
-              <Controller
-                name="Endereco.id"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    id={field.name}
-                    label="Endereco.id"
-                    value={field.value}
-                    onChange={field.onChange}
-                    disabled
-                    error={Boolean(fieldState.error?.message)}
-                    helperText={fieldState.error?.message}
-                  />
-                )}
-              />
-
-              <Controller
-                name="Endereco.logradouro"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    id={field.name}
-                    label="Logradouro"
-                    value={field.value}
-                    onChange={field.onChange}
-                    disabled
-                    error={Boolean(fieldState.error?.message)}
-                    helperText={fieldState.error?.message}
-                  />
-                )}
-              />
-
-              <Controller
-                name="Endereco.bairro"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    id={field.name}
-                    label="Bairro"
-                    value={field.value}
-                    onChange={field.onChange}
-                    disabled
-                    error={Boolean(fieldState.error?.message)}
-                    helperText={fieldState.error?.message}
-                  />
-                )}
-              />
-
-              <Controller
-                name="Endereco.numero"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    id={field.name}
-                    label="Número"
-                    value={field.value}
-                    onChange={field.onChange}
-                    error={Boolean(fieldState.error?.message)}
-                    helperText={fieldState.error?.message}
-                  />
-                )}
-              />
-
-              <Controller
-                name="Endereco.CodCidadeIBGE"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    id={field.name}
-                    label="Código da cidade no IBGE"
-                    value={field.value}
-                    onChange={field.onChange}
-                    error={Boolean(fieldState.error?.message)}
-                    helperText={fieldState.error?.message}
-                  />
-                )}
-              />
-
-              <Controller
-                name="Endereco.complemento"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    id={field.name}
-                    label="Complemento"
-                    value={field.value}
-                    onChange={field.onChange}
-                    error={Boolean(fieldState.error?.message)}
-                    helperText={fieldState.error?.message}
-                  />
-                )}
-              />
-
-              <Controller
-                name="Endereco.lat"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    id={field.name}
-                    label="Latitude"
-                    value={field.value}
-                    onChange={field.onChange}
-                    disabled
-                    error={Boolean(fieldState.error?.message)}
-                    helperText={fieldState.error?.message}
-                  />
-                )}
-              />
-
-              <Controller
-                name="Endereco.lng"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    id={field.name}
-                    label="Longitude"
-                    value={field.value}
-                    onChange={field.onChange}
-                    disabled
-                    error={Boolean(fieldState.error?.message)}
-                    helperText={fieldState.error?.message}
-                  />
-                )}
-              />
-
-              <Controller
-                name="Endereco.cidade"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    id={field.name}
-                    label="Cidade"
-                    value={field.value}
-                    onChange={field.onChange}
-                    disabled
-                    error={Boolean(fieldState.error?.message)}
-                    helperText={fieldState.error?.message}
-                  />
-                )}
-              />
-
-              <Controller
-                name="Endereco.estado"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    id={field.name}
-                    label="Sigla do estado"
-                    value={field.value}
-                    onChange={field.onChange}
-                    disabled
-                    error={Boolean(fieldState.error?.message)}
-                    helperText={fieldState.error?.message}
-                  />
-                )}
-              />
-
-              <Controller
-                name="Endereco.nomeEstado"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <TextField
-                    id={field.name}
-                    label="Nome do estado"
-                    value={field.value}
-                    onChange={field.onChange}
-                    disabled
-                    error={Boolean(fieldState.error?.message)}
-                    helperText={fieldState.error?.message}
-                  />
-                )}
-              />
-            </Stack>
+              </Stack>
+            </Grid>
           </Grid>
 
-          <Grid item xs={12} lg={6}>
-            {isLoaded && (
-              <GoogleMap
-                mapContainerStyle={mapContainerStyle}
-                zoom={14}
-                onLoad={onLoad}
-                onUnmount={onUnmount}
-                center={center}
+          <Grid container spacing={2}>
+            <Grid item xs={12} lg={6}>
+              <Stack gap="1rem">
+                <Typography fontWeight={700}>Endereço</Typography>
+
+                <Controller
+                  name="Endereco.cep"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <TextField
+                      id={field.name}
+                      label="CEP"
+                      value={field.value}
+                      onChange={field.onChange}
+                      error={Boolean(fieldState.error?.message)}
+                      helperText={fieldState.error?.message}
+                    />
+                  )}
+                />
+
+                <Controller
+                  name="Endereco.id"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <TextField
+                      id={field.name}
+                      label="Endereco.id"
+                      value={field.value}
+                      onChange={field.onChange}
+                      disabled
+                      error={Boolean(fieldState.error?.message)}
+                      helperText={fieldState.error?.message}
+                    />
+                  )}
+                />
+
+                <Controller
+                  name="Endereco.logradouro"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <TextField
+                      id={field.name}
+                      label="Logradouro"
+                      value={field.value}
+                      onChange={field.onChange}
+                      disabled
+                      error={Boolean(fieldState.error?.message)}
+                      helperText={fieldState.error?.message}
+                    />
+                  )}
+                />
+
+                <Controller
+                  name="Endereco.bairro"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <TextField
+                      id={field.name}
+                      label="Bairro"
+                      value={field.value}
+                      onChange={field.onChange}
+                      disabled
+                      error={Boolean(fieldState.error?.message)}
+                      helperText={fieldState.error?.message}
+                    />
+                  )}
+                />
+
+                <Controller
+                  name="Endereco.numero"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <TextField
+                      id={field.name}
+                      label="Número"
+                      value={field.value}
+                      onChange={field.onChange}
+                      error={Boolean(fieldState.error?.message)}
+                      helperText={fieldState.error?.message}
+                    />
+                  )}
+                />
+
+                <Controller
+                  name="Endereco.CodCidadeIBGE"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <TextField
+                      id={field.name}
+                      label="Código da cidade no IBGE"
+                      value={field.value}
+                      onChange={field.onChange}
+                      error={Boolean(fieldState.error?.message)}
+                      helperText={fieldState.error?.message}
+                    />
+                  )}
+                />
+
+                <Controller
+                  name="Endereco.complemento"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <TextField
+                      id={field.name}
+                      label="Complemento"
+                      value={field.value}
+                      onChange={field.onChange}
+                      error={Boolean(fieldState.error?.message)}
+                      helperText={fieldState.error?.message}
+                    />
+                  )}
+                />
+
+                <Controller
+                  name="Endereco.lat"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <TextField
+                      id={field.name}
+                      label="Latitude"
+                      value={field.value}
+                      onChange={field.onChange}
+                      disabled
+                      error={Boolean(fieldState.error?.message)}
+                      helperText={fieldState.error?.message}
+                    />
+                  )}
+                />
+
+                <Controller
+                  name="Endereco.lng"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <TextField
+                      id={field.name}
+                      label="Longitude"
+                      value={field.value}
+                      onChange={field.onChange}
+                      disabled
+                      error={Boolean(fieldState.error?.message)}
+                      helperText={fieldState.error?.message}
+                    />
+                  )}
+                />
+
+                <Controller
+                  name="Endereco.cidade"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <TextField
+                      id={field.name}
+                      label="Cidade"
+                      value={field.value}
+                      onChange={field.onChange}
+                      disabled
+                      error={Boolean(fieldState.error?.message)}
+                      helperText={fieldState.error?.message}
+                    />
+                  )}
+                />
+
+                <Controller
+                  name="Endereco.estado"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <TextField
+                      id={field.name}
+                      label="Sigla do estado"
+                      value={field.value}
+                      onChange={field.onChange}
+                      disabled
+                      error={Boolean(fieldState.error?.message)}
+                      helperText={fieldState.error?.message}
+                    />
+                  )}
+                />
+
+                <Controller
+                  name="Endereco.nomeEstado"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <TextField
+                      id={field.name}
+                      label="Nome do estado"
+                      value={field.value}
+                      onChange={field.onChange}
+                      disabled
+                      error={Boolean(fieldState.error?.message)}
+                      helperText={fieldState.error?.message}
+                    />
+                  )}
+                />
+              </Stack>
+            </Grid>
+
+            <Grid item xs={12} lg={6}>
+              {isLoaded && (
+                <GoogleMap
+                  mapContainerStyle={mapContainerStyle}
+                  zoom={14}
+                  onLoad={onLoad}
+                  onUnmount={onUnmount}
+                  center={center}
+                >
+                  <Marker position={center} title={formData.nome} />
+                </GoogleMap>
+              )}
+            </Grid>
+
+            <Grid item xs={12}>
+              <LoadingButton
+                type="submit"
+                variant="contained"
+                loading={loading}
+                fullWidth
               >
-                <Marker position={center} title={formData.nome} />
-              </GoogleMap>
-            )}
+                Submit
+              </LoadingButton>
+            </Grid>
           </Grid>
-
-          <Grid item xs={12}>
-            <LoadingButton
-              type="submit"
-              variant="contained"
-              loading={loading}
-              fullWidth
-            >
-              Submit
-            </LoadingButton>
-          </Grid>
-        </Grid>
+        </Stack>
       </form>
     </Box>
   );
