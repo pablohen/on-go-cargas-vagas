@@ -1,62 +1,13 @@
-import {
-  Container,
-  CssBaseline,
-  ThemeProvider,
-  Typography,
-} from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { SnackbarProvider } from "notistack";
-import {
-  createBrowserRouter,
-  RouteObject,
-  RouterProvider,
-} from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import { appTheme } from "./config/theme";
-import { ProtectedPages } from "./layouts/ProtectedPages";
-import { Login } from "./pages/Login";
-import { TerminalCreate } from "./pages/TerminalCreate";
-import { TerminalEdit } from "./pages/TerminalEdit";
-import { TerminalList } from "./pages/TerminalList";
+import { router } from "./router";
 
 function App() {
   const queryClient = new QueryClient();
-
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      children: [
-        {
-          path: "",
-          element: <Login />,
-        },
-        {
-          path: "login",
-          element: <Login />,
-        },
-        {
-          path: "terminals",
-          handle: "Terminais",
-          element: <ProtectedPages />,
-          children: [
-            { path: "", element: <TerminalList /> },
-            { path: "new", element: <TerminalCreate />, handle: "Novo" },
-            ,
-            { path: "edit/:id", element: <TerminalEdit />, handle: "Editar" },
-          ] as RouteObject[],
-        },
-        {
-          path: "*",
-          element: (
-            <Container>
-              <Typography variant="h4">404</Typography>
-              <Typography variant="h6">Not found</Typography>
-            </Container>
-          ),
-        },
-      ],
-    },
-  ]);
 
   return (
     <QueryClientProvider client={queryClient}>
