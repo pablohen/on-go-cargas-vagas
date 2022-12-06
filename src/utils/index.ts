@@ -1,7 +1,7 @@
 import { Terminal } from "../types/Terminal";
 import { UpsertTerminal } from "../types/UpsertTerminal";
 
-export function mapTerminalToUpsert(data: Terminal): UpsertTerminal {
+export function mapTerminalToUpsertTerminal(data: Terminal): UpsertTerminal {
   const upsertTerminal: UpsertTerminal = {
     Id: data.id,
     idDonoCarga: data.idDonoCarga,

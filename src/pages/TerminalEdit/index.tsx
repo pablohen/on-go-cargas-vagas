@@ -4,7 +4,7 @@ import { useSnackbar } from "notistack";
 import { useParams } from "react-router-dom";
 import { FormSchema, TerminalForm } from "../../components/TerminalForm";
 import { useOnGo } from "../../hooks/useOnGo";
-import { mapTerminalToUpsert } from "../../utils/mapTerminalToUpsert";
+import { mapTerminalToUpsertTerminal } from "../../utils";
 
 export function TerminalEdit() {
   const { getTerminal, updateTerminal } = useOnGo();
@@ -43,7 +43,7 @@ export function TerminalEdit() {
         <TerminalForm
           data={
             terminalQuery.data?.data
-              ? mapTerminalToUpsert(terminalQuery.data?.data)
+              ? mapTerminalToUpsertTerminal(terminalQuery.data?.data)
               : undefined
           }
           loading={updateMutation.isLoading}
