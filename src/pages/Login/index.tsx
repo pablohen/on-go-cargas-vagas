@@ -1,7 +1,47 @@
-import { Box } from "@mui/material";
-import { LoginForm } from "../../components/LoginForm";
+import { Box, Card } from "@mui/material";
+import { AxiosError } from "axios";
+import { useSnackbar } from "notistack";
+import { FormSchema, LoginForm } from "../../components/LoginForm";
+import { useOnGo } from "../../hooks/useOnGo";
+
+const demoUser: FormSchema = {
+  login: "vagas@ongo.com.br",
+  password: "Vagas1a2b",
+};
 
 export function Login() {
+  const { enqueueSnackbar } = useSnackbar();
+  const { login, setUser } = useOnGo();
+
+  const loginMutation = login();
+
+  function handleOnValid(data: FormSchema, e: any) {
+    e.preventDefault();
+
+    loginMutation.mutate(
+      {
+        login: data.login,
+        password: data.password,
+      },
+      {
+        onSuccess: (userData) => {
+          setUser(userData);
+
+          enqueueSnackbar("Logged in", {
+            variant: "success",
+          });
+        },
+        onError: (error) => {
+          const err = error as AxiosError;
+
+          enqueueSnackbar(err.message, {
+            variant: "error",
+          });
+        },
+      }
+    );
+  }
+
   return (
     <Box
       sx={{
@@ -12,7 +52,18 @@ export function Login() {
         height: "100vh",
       }}
     >
-      <LoginForm />
+      <Card
+        sx={{
+          padding: "1rem",
+          width: "20rem",
+        }}
+      >
+        <LoginForm
+          data={demoUser}
+          loading={loginMutation.isLoading}
+          onValid={handleOnValid}
+        />
+      </Card>
     </Box>
   );
 }
