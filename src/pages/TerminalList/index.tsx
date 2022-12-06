@@ -37,8 +37,8 @@ export function TerminalList() {
               alignItems: "center",
             }}
           >
-            <Button onClick={() => navigate("./new")}>
-              <Add /> Novo terminal
+            <Button onClick={() => navigate("./new")} startIcon={<Add />}>
+              Novo terminal
             </Button>
           </Box>
 
