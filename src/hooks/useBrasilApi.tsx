@@ -21,7 +21,7 @@ export function useBrasilApi() {
     return useQuery(["cep", cep], () => getter(), {
       enabled: Boolean(cep),
       onSuccess: () => {
-        enqueueSnackbar("Address autocompleted based on CEP", {
+        enqueueSnackbar("Endereço preenchido automaticamente com base no CEP", {
           variant: "info",
         });
       },

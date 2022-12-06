@@ -51,7 +51,7 @@ export function useOnGo() {
     setUser(null);
     navigate("/login");
 
-    enqueueSnackbar("Logged out", {
+    enqueueSnackbar("Usuário deslogado", {
       variant: "info",
     });
   }

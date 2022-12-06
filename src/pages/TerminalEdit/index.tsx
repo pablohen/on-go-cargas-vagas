@@ -20,10 +20,10 @@ export function TerminalEdit() {
 
   function handleOnValid(data: FormSchema, e: any) {
     e.preventDefault();
-    console.log(data);
+
     updateMutation.mutate(data, {
       onSuccess: () => {
-        enqueueSnackbar("Terminal updated", {
+        enqueueSnackbar("Terminal atualizado", {
           variant: "success",
         });
       },

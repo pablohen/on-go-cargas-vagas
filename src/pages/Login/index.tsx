@@ -27,7 +27,7 @@ export function Login() {
         onSuccess: (userData) => {
           setUser(userData);
 
-          enqueueSnackbar("Logged in", {
+          enqueueSnackbar("Usuário logado", {
             variant: "success",
           });
         },

@@ -14,12 +14,11 @@ export function TerminalCreate() {
 
     createMutation.mutate(data, {
       onSuccess: () => {
-        enqueueSnackbar("Terminal created", {
+        enqueueSnackbar("Terminal cadastrado", {
           variant: "success",
         });
       },
       onError: (error) => {
-        console.log("outro erro", error);
         const err = error as any;
         const errors = err?.response?.data?.data;
 
