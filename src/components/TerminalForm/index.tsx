@@ -507,7 +507,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                 loading={loading}
                 fullWidth
               >
-                Submit
+                Enviar
               </LoadingButton>
             </Grid>
           </Grid>

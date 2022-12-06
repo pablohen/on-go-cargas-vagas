@@ -102,7 +102,7 @@ export function LoginForm() {
             render={({ field, fieldState }) => (
               <TextField
                 id="password"
-                label="Password"
+                label="Senha"
                 type="password"
                 value={field.value}
                 onChange={field.onChange}
@@ -118,7 +118,7 @@ export function LoginForm() {
             variant="contained"
             loading={loginMutation.isLoading}
           >
-            Submit
+            Enviar
           </LoadingButton>
         </Stack>
       </form>
