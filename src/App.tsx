@@ -12,8 +12,8 @@ import {
   RouteObject,
   RouterProvider,
 } from "react-router-dom";
-import { ProtectedPages } from "./components/ProtectedPages";
 import { appTheme } from "./config/theme";
+import { ProtectedPages } from "./layouts/ProtectedPages";
 import { Login } from "./pages/Login";
 import { TerminalCreate } from "./pages/TerminalCreate";
 import { TerminalEdit } from "./pages/TerminalEdit";
