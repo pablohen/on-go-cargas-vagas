@@ -89,6 +89,7 @@ export function LoginForm() {
                 label="Login"
                 value={field.value}
                 onChange={field.onChange}
+                inputRef={field.ref}
                 error={Boolean(fieldState.error?.message)}
                 helperText={fieldState.error?.message}
               />
@@ -105,6 +106,7 @@ export function LoginForm() {
                 type="password"
                 value={field.value}
                 onChange={field.onChange}
+                inputRef={field.ref}
                 error={Boolean(fieldState.error?.message)}
                 helperText={fieldState.error?.message}
               />
@@ -115,7 +117,6 @@ export function LoginForm() {
             type="submit"
             variant="contained"
             loading={loginMutation.isLoading}
-            disabled={!form.formState.isValid}
           >
             Submit
           </LoadingButton>
