@@ -489,7 +489,14 @@ export function TerminalForm({ data, loading, onValid }: Props) {
               </Stack>
             </Grid>
 
-            <Grid item xs={12} lg={6}>
+            <Grid
+              item
+              xs={12}
+              lg={6}
+              sx={{
+                display: "flex",
+              }}
+            >
               <TerminalMap center={center} title={formData.nome} />
             </Grid>
 

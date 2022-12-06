@@ -24,8 +24,10 @@ export default function TerminalMap({ center, title }: Props) {
         <GoogleMap
           mapContainerStyle={{
             width: "100%",
-            height: "400px",
             borderRadius: "8px",
+            display: "flex",
+            flexGrow: 1,
+            minHeight: "20rem",
           }}
           zoom={14}
           center={center}
