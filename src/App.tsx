@@ -7,7 +7,11 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { SnackbarProvider } from "notistack";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouteObject,
+  RouterProvider,
+} from "react-router-dom";
 import { ProtectedPages } from "./components/ProtectedPages";
 import { appTheme } from "./config/theme";
 import { Login } from "./pages/Login";
@@ -17,6 +21,42 @@ import { TerminalList } from "./pages/TerminalList";
 
 function App() {
   const queryClient = new QueryClient();
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      children: [
+        {
+          path: "",
+          element: <Login />,
+        },
+        {
+          path: "login",
+          element: <Login />,
+        },
+        {
+          path: "terminals",
+          handle: "Terminais",
+          element: <ProtectedPages />,
+          children: [
+            { path: "", element: <TerminalList /> },
+            { path: "new", element: <TerminalCreate />, handle: "Novo" },
+            ,
+            { path: "edit/:id", element: <TerminalEdit />, handle: "Editar" },
+          ] as RouteObject[],
+        },
+        {
+          path: "*",
+          element: (
+            <Container>
+              <Typography variant="h4">404</Typography>
+              <Typography variant="h6">Not found</Typography>
+            </Container>
+          ),
+        },
+      ],
+    },
+  ]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -30,30 +70,7 @@ function App() {
           }}
         >
           <CssBaseline />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/">
-                <Route path="" element={<Login />} />
-                <Route path="login" element={<Login />} />
-
-                <Route path="terminals" element={<ProtectedPages />}>
-                  <Route path="" element={<TerminalList />} />
-                  <Route path="new" element={<TerminalCreate />} />
-                  <Route path="edit/:id" element={<TerminalEdit />} />
-                </Route>
-
-                <Route
-                  path="*"
-                  element={
-                    <Container>
-                      <Typography variant="h4">404</Typography>
-                      <Typography variant="h6">Not found</Typography>
-                    </Container>
-                  }
-                />
-              </Route>
-            </Routes>
-          </BrowserRouter>
+          <RouterProvider router={router} />
         </SnackbarProvider>
       </ThemeProvider>
       <ReactQueryDevtools initialIsOpen={false} />

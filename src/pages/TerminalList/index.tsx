@@ -1,5 +1,5 @@
 import { Add } from "@mui/icons-material";
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import { Box, Button, Container, Stack } from "@mui/material";
 import { GridFilterModel } from "@mui/x-data-grid";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -33,12 +33,10 @@ export function TerminalList() {
           <Box
             sx={{
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: "flex-end",
               alignItems: "center",
             }}
           >
-            <Typography variant="h4">Terminais</Typography>
-
             <Button onClick={() => navigate("./new")}>
               <Add /> Novo terminal
             </Button>

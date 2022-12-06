@@ -1,4 +1,4 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { AxiosError } from "axios";
 import { useSnackbar } from "notistack";
 import { useParams } from "react-router-dom";
@@ -40,21 +40,15 @@ export function TerminalEdit() {
   return (
     <Container>
       <Box pt="2rem" pb="1rem">
-        <Stack gap="1rem">
-          <Typography variant="h4">
-            Terminal: {terminalQuery.data?.data.nome}
-          </Typography>
-
-          <TerminalForm
-            data={
-              terminalQuery.data?.data
-                ? mapTerminalToUpsert(terminalQuery.data?.data)
-                : undefined
-            }
-            loading={updateMutation.isLoading}
-            onValid={handleOnValid}
-          />
-        </Stack>
+        <TerminalForm
+          data={
+            terminalQuery.data?.data
+              ? mapTerminalToUpsert(terminalQuery.data?.data)
+              : undefined
+          }
+          loading={updateMutation.isLoading}
+          onValid={handleOnValid}
+        />
       </Box>
     </Container>
   );

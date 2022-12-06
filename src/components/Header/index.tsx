@@ -2,6 +2,7 @@ import { AccountCircle, Logout as LogoutIcon } from "@mui/icons-material";
 import {
   AppBar,
   Button,
+  Container,
   IconButton,
   ListItemIcon,
   Menu,
@@ -12,10 +13,9 @@ import {
 import React from "react";
 import { Link } from "react-router-dom";
 import { useOnGo } from "../../hooks/useOnGo";
+import { BreadcrumbList } from "../BreadcrumbList";
 
-interface Props {}
-
-export function Header({}: Props) {
+export function Header() {
   const { user, logout } = useOnGo();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -32,58 +32,64 @@ export function Header({}: Props) {
   };
 
   return (
-    <AppBar position="sticky">
-      <Toolbar>
-        <Typography
-          variant="h6"
-          component={Link}
-          to="/terminals"
-          sx={{ color: "inherit", textDecoration: "none", flexGrow: 1 }}
-        >
-          ON GO Cargas
-        </Typography>
+    <>
+      <AppBar position="sticky">
+        <Toolbar>
+          <Typography
+            variant="h6"
+            component={Link}
+            to="/terminals"
+            sx={{ color: "inherit", textDecoration: "none", flexGrow: 1 }}
+          >
+            ON GO Cargas
+          </Typography>
 
-        <Button component={Link} to="/terminals">
-          Terminais
-        </Button>
+          <Button component={Link} to="/terminals">
+            Terminais
+          </Button>
 
-        {Boolean(user) && (
-          <div>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              color="inherit"
-            >
-              <AccountCircle alphabetic="On Go Cargas" />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleLogout}>
-                <ListItemIcon>
-                  <LogoutIcon fontSize="small" />
-                </ListItemIcon>
-                Logout
-              </MenuItem>
-            </Menu>
-          </div>
-        )}
-      </Toolbar>
-    </AppBar>
+          {Boolean(user) && (
+            <div>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle alphabetic="On Go Cargas" />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleLogout}>
+                  <ListItemIcon>
+                    <LogoutIcon fontSize="small" />
+                  </ListItemIcon>
+                  Logout
+                </MenuItem>
+              </Menu>
+            </div>
+          )}
+        </Toolbar>
+      </AppBar>
+
+      <Container>
+        <BreadcrumbList />
+      </Container>
+    </>
   );
 }
