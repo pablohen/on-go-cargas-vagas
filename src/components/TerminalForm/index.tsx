@@ -1,3 +1,5 @@
+import { isValid as isValidCnpj } from "@fnando/cnpj";
+import { isValid as isValidCpf } from "@fnando/cpf";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -24,15 +26,15 @@ const schema = z.object({
   idDonoCarga: z.number(),
   nome: z.string().min(3, "Mínimo de 3 caracteres"),
   TipoPessoa: z.number(),
-  CPF: z.string(),
-  CNPJ: z.string(),
+  CPF: z.string().refine(isValidCpf, "CPF inválido").or(z.literal("")),
+  CNPJ: z.string().refine(isValidCnpj, "CNPJ inválido").or(z.literal("")),
   InscricaoEstadual: z.number(),
   Endereco: z.object({
     id: z.number(),
     logradouro: z.string(),
-    cep: z.string(),
+    cep: z.string().regex(/[0-9]{5}-[0-9]{3}/, "CEP inválido"),
     bairro: z.string(),
-    numero: z.string(),
+    numero: z.string().min(1, "Número inválido"),
     CodCidadeIBGE: z.number(),
     complemento: z.string(),
     lat: z.number(),
@@ -191,6 +193,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                         placeholder="000.000.000-00"
                         value={field.value}
                         onChange={field.onChange}
+                        inputRef={field.ref}
                       >
                         <TextField
                           id={field.name}
@@ -213,6 +216,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                         placeholder="00.000.000/0000-00"
                         value={field.value}
                         onChange={field.onChange}
+                        inputRef={field.ref}
                       >
                         <TextField
                           id={field.name}
@@ -242,6 +246,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                       onChange={field.onChange}
                       error={Boolean(fieldState.error?.message)}
                       helperText={fieldState.error?.message}
+                      inputRef={field.ref}
                     />
                   )}
                 />
@@ -257,6 +262,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                       onChange={field.onChange}
                       error={Boolean(fieldState.error?.message)}
                       helperText={fieldState.error?.message}
+                      inputRef={field.ref}
                     />
                   )}
                 />
@@ -278,6 +284,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                       placeholder="00000-000"
                       value={field.value}
                       onChange={field.onChange}
+                      inputRef={field.ref}
                     >
                       <TextField
                         id={field.name}
@@ -298,6 +305,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                       label="Endereco.id"
                       value={field.value}
                       onChange={field.onChange}
+                      inputRef={field.ref}
                       disabled
                       error={Boolean(fieldState.error?.message)}
                       helperText={fieldState.error?.message}
@@ -314,6 +322,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                       label="Logradouro"
                       value={field.value}
                       onChange={field.onChange}
+                      inputRef={field.ref}
                       disabled
                       error={Boolean(fieldState.error?.message)}
                       helperText={fieldState.error?.message}
@@ -330,6 +339,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                       label="Bairro"
                       value={field.value}
                       onChange={field.onChange}
+                      inputRef={field.ref}
                       disabled
                       error={Boolean(fieldState.error?.message)}
                       helperText={fieldState.error?.message}
@@ -346,6 +356,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                       label="Número"
                       value={field.value}
                       onChange={field.onChange}
+                      inputRef={field.ref}
                       error={Boolean(fieldState.error?.message)}
                       helperText={fieldState.error?.message}
                     />
@@ -361,6 +372,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                       label="Código da cidade no IBGE"
                       value={field.value}
                       onChange={field.onChange}
+                      inputRef={field.ref}
                       error={Boolean(fieldState.error?.message)}
                       helperText={fieldState.error?.message}
                     />
@@ -376,6 +388,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                       label="Complemento"
                       value={field.value}
                       onChange={field.onChange}
+                      inputRef={field.ref}
                       error={Boolean(fieldState.error?.message)}
                       helperText={fieldState.error?.message}
                     />
@@ -391,6 +404,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                       label="Latitude"
                       value={field.value}
                       onChange={field.onChange}
+                      inputRef={field.ref}
                       disabled
                       error={Boolean(fieldState.error?.message)}
                       helperText={fieldState.error?.message}
@@ -407,6 +421,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                       label="Longitude"
                       value={field.value}
                       onChange={field.onChange}
+                      inputRef={field.ref}
                       disabled
                       error={Boolean(fieldState.error?.message)}
                       helperText={fieldState.error?.message}
@@ -423,6 +438,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                       label="Cidade"
                       value={field.value}
                       onChange={field.onChange}
+                      inputRef={field.ref}
                       disabled
                       error={Boolean(fieldState.error?.message)}
                       helperText={fieldState.error?.message}
@@ -439,6 +455,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                       label="Sigla do estado"
                       value={field.value}
                       onChange={field.onChange}
+                      inputRef={field.ref}
                       disabled
                       error={Boolean(fieldState.error?.message)}
                       helperText={fieldState.error?.message}
@@ -455,6 +472,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                       label="Nome do estado"
                       value={field.value}
                       onChange={field.onChange}
+                      inputRef={field.ref}
                       disabled
                       error={Boolean(fieldState.error?.message)}
                       helperText={fieldState.error?.message}
