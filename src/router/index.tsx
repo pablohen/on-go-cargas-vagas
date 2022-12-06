@@ -1,7 +1,7 @@
-import { Login } from "@mui/icons-material";
 import { Container, Typography } from "@mui/material";
 import { createBrowserRouter, RouteObject } from "react-router-dom";
 import { ProtectedPages } from "../layouts/ProtectedPages";
+import { Login } from "../pages/Login";
 import { TerminalCreate } from "../pages/TerminalCreate";
 import { TerminalEdit } from "../pages/TerminalEdit";
 import { TerminalList } from "../pages/TerminalList";
