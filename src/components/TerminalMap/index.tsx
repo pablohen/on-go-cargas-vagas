@@ -1,3 +1,4 @@
+import { useTheme } from "@mui/system";
 import {
   GoogleMap,
   MarkerF,
@@ -18,13 +19,15 @@ export function TerminalMap({ center, title }: Props) {
     googleMapsApiKey: import.meta.env.VITE_MAPS_API_KEY,
   });
 
+  const theme = useTheme();
+
   return (
     <>
       {isLoaded && (
         <GoogleMap
           mapContainerStyle={{
             width: "100%",
-            borderRadius: "8px",
+            borderRadius: theme.shape.borderRadius,
             display: "flex",
             flexGrow: 1,
             minHeight: "20rem",
