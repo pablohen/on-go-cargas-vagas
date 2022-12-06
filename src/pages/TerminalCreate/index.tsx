@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Card, Container } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { FormSchema, TerminalForm } from "../../components/TerminalForm";
 import { useOnGo } from "../../hooks/useOnGo";
@@ -37,13 +37,13 @@ export function TerminalCreate() {
   }
 
   return (
-    <Container>
-      <Box pt="2rem" pb="1rem">
+    <Container sx={{ pb: "1rem" }}>
+      <Card sx={{ p: "1rem" }}>
         <TerminalForm
           loading={createMutation.isLoading}
           onValid={handleOnValid}
         />
-      </Box>
+      </Card>
     </Container>
   );
 }

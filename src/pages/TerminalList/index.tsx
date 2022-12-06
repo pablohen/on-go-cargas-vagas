@@ -1,5 +1,5 @@
 import { Add } from "@mui/icons-material";
-import { Box, Button, Container, Stack } from "@mui/material";
+import { Box, Button, Card, Container, Stack } from "@mui/material";
 import { GridFilterModel } from "@mui/x-data-grid";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -27,8 +27,8 @@ export function TerminalList() {
   }
 
   return (
-    <Container>
-      <Box pt="2rem" pb="1rem">
+    <Container sx={{ pb: "1rem" }}>
+      <Card sx={{ p: "1rem" }}>
         <Stack gap="1rem">
           <Box
             sx={{
@@ -48,7 +48,7 @@ export function TerminalList() {
             handleFilterChange={handleFilterChange}
           />
         </Stack>
-      </Box>
+      </Card>
     </Container>
   );
 }

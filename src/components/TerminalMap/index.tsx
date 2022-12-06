@@ -12,7 +12,7 @@ interface Props {
   title: string;
 }
 
-export default function TerminalMap({ center, title }: Props) {
+export function TerminalMap({ center, title }: Props) {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: import.meta.env.VITE_MAPS_API_KEY,

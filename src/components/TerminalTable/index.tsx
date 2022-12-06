@@ -57,29 +57,28 @@ export function TerminalTable({
   ];
 
   return (
-    <div>
-      <DataGrid
-        columns={columns}
-        rows={rows}
-        autoHeight
-        filterMode="server"
-        paginationMode="server"
-        loading={!data}
-        pageSize={data?.data.pageSize}
-        components={{ Toolbar: GridToolbar }}
-        componentsProps={{
-          toolbar: {
-            showQuickFilter: true,
-            quickFilterProps: { debounceMs: 500 },
-          },
-        }}
-        rowCount={data?.data.totalResult}
-        onPageChange={handleOnPageChange}
-        onFilterModelChange={handleFilterChange}
-        disableColumnFilter
-        disableDensitySelector
-        disableSelectionOnClick
-      />
-    </div>
+    <DataGrid
+      columns={columns}
+      rows={rows}
+      autoHeight
+      filterMode="server"
+      paginationMode="server"
+      loading={!data}
+      pageSize={data?.data.pageSize}
+      components={{ Toolbar: GridToolbar }}
+      componentsProps={{
+        toolbar: {
+          showQuickFilter: true,
+          quickFilterProps: { debounceMs: 500 },
+        },
+      }}
+      rowCount={data?.data.totalResult}
+      onPageChange={handleOnPageChange}
+      onFilterModelChange={handleFilterChange}
+      disableColumnFilter
+      disableDensitySelector
+      disableSelectionOnClick
+      sx={{ border: 0 }}
+    />
   );
 }

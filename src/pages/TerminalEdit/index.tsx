@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Card, Container } from "@mui/material";
 import { AxiosError } from "axios";
 import { useSnackbar } from "notistack";
 import { useParams } from "react-router-dom";
@@ -38,8 +38,8 @@ export function TerminalEdit() {
   }
 
   return (
-    <Container>
-      <Box pt="2rem" pb="1rem">
+    <Container sx={{ pb: "1rem" }}>
+      <Card sx={{ p: "1rem" }}>
         <TerminalForm
           data={
             terminalQuery.data?.data
@@ -49,7 +49,7 @@ export function TerminalEdit() {
           loading={updateMutation.isLoading}
           onValid={handleOnValid}
         />
-      </Box>
+      </Card>
     </Container>
   );
 }
