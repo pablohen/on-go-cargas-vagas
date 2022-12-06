@@ -8,6 +8,7 @@ import {
   GridRowsProp,
   GridToolbar,
 } from "@mui/x-data-grid";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Result } from "../../types/Terminals";
 
@@ -23,8 +24,9 @@ export function TerminalTable({
   handleFilterChange,
 }: Props) {
   const navigate = useNavigate();
+  const [result, setResult] = useState<Result>();
 
-  const terminals = data?.data.data;
+  const terminals = result?.data.data;
 
   const rows: GridRowsProp = terminals
     ? terminals.map((terminal) => ({
@@ -56,15 +58,25 @@ export function TerminalTable({
     { field: "actions", headerName: "Ações", renderCell: renderActionsCell },
   ];
 
+  useEffect(() => {
+    if (data) {
+      setResult(data);
+    }
+  }, [data]);
+
   return (
     <DataGrid
-      columns={columns}
       rows={rows}
+      columns={columns}
+      rowCount={result?.data.totalResult}
+      pageSize={result?.data.pageSize}
       autoHeight
       filterMode="server"
       paginationMode="server"
-      loading={!data}
-      pageSize={data?.data.pageSize}
+      loading={!result}
+      disableColumnFilter
+      disableDensitySelector
+      disableSelectionOnClick
       components={{ Toolbar: GridToolbar }}
       componentsProps={{
         toolbar: {
@@ -72,12 +84,9 @@ export function TerminalTable({
           quickFilterProps: { debounceMs: 500 },
         },
       }}
-      rowCount={data?.data.totalResult}
       onPageChange={handleOnPageChange}
       onFilterModelChange={handleFilterChange}
-      disableColumnFilter
-      disableDensitySelector
-      disableSelectionOnClick
+      checkboxSelection={false}
       sx={{ border: 0 }}
     />
   );
