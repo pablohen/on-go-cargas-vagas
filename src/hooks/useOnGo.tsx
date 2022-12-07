@@ -35,15 +35,17 @@ export function useOnGo() {
   const { enqueueSnackbar } = useSnackbar();
 
   function login() {
-    return useMutation({
-      mutationFn: async (data: AuthParams) => {
-        const res = await api.post<Auth>("/v1/public/api/Auth/login", {
-          UserIdentifier: data.login,
-          Password: data.password,
-        });
+    async function mutation(data: AuthParams) {
+      const res = await api.post<Auth>("/v1/public/api/Auth/login", {
+        UserIdentifier: data.login,
+        Password: data.password,
+      });
 
-        return res.data;
-      },
+      return res.data;
+    }
+
+    return useMutation({
+      mutationFn: mutation,
     });
   }
 
@@ -57,7 +59,7 @@ export function useOnGo() {
   }
 
   function getTerminals(data: PaginationOptions) {
-    const getter = async () => {
+    async function query() {
       const { pageIndex, pageSize, pesquisa } = data;
       const res = await api.get<TerminalsResult>(
         "/v1/api/Terminal/get-terminal-listagem",
@@ -75,15 +77,17 @@ export function useOnGo() {
       );
 
       return res.data;
-    };
+    }
 
-    return useQuery(["terminal", ...Object.values(data)], () => getter(), {
+    return useQuery({
+      queryKey: ["terminal", ...Object.values(data)],
+      queryFn: query,
       enabled: Boolean(user?.access_token),
     });
   }
 
   function getTerminal({ id }: GetTerminal) {
-    const getter = async () => {
+    async function query() {
       const res = await api.get<TerminalResult>(
         "/v1/api/Terminal/get-terminal-id",
         {
@@ -96,40 +100,54 @@ export function useOnGo() {
       );
 
       return res.data;
-    };
+    }
 
-    return useQuery(["terminal", id], () => getter(), {
+    return useQuery({
+      queryKey: ["terminal", id],
+      queryFn: query,
       enabled: Boolean(id) && Boolean(user?.access_token),
     });
   }
 
   function createTerminal() {
-    return useMutation({
-      mutationFn: async (data: UpsertTerminal) => {
-        const res = await api.post("/v1/api/Terminal/save-terminal", data, {
+    async function mutation(data: UpsertTerminal) {
+      const res = await api.post<UpsertTerminal>(
+        "/v1/api/Terminal/save-terminal",
+        data,
+        {
           headers: {
             Authorization: `Bearer ${user?.access_token}`,
             "Ocp-Apim-Subscription-Key": subscriptionKey,
           },
-        });
+        }
+      );
 
-        return res.data;
-      },
+      return res.data;
+    }
+
+    return useMutation({
+      mutationFn: mutation,
     });
   }
 
   function updateTerminal() {
-    return useMutation({
-      mutationFn: async (data: UpsertTerminal) => {
-        const res = await api.post("/v1/api/Terminal/alterar-terminal", data, {
+    async function mutation(data: UpsertTerminal) {
+      const res = await api.post<UpsertTerminal>(
+        "/v1/api/Terminal/alterar-terminal",
+        data,
+        {
           headers: {
             Authorization: `Bearer ${user?.access_token}`,
             "Ocp-Apim-Subscription-Key": subscriptionKey,
           },
-        });
+        }
+      );
 
-        return res.data;
-      },
+      return res.data;
+    }
+
+    return useMutation({
+      mutationFn: mutation,
     });
   }
 
