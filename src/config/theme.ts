@@ -10,6 +10,9 @@ export const appTheme = createTheme(
       secondary: { main: "#fdc800" },
       text: { primary: "#f5f5f1" },
     },
+    typography: {
+      fontFamily: "'Alexandria', sans-serif",
+    },
     components: {
       MuiButton: {
         defaultProps: {
