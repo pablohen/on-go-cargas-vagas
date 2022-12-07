@@ -20,29 +20,59 @@ import { useBrasilApi } from "../../hooks/useBrasilApi";
 import { UpsertTerminal } from "../../types/UpsertTerminal";
 import { TerminalMap } from "../TerminalMap";
 
-const schema = z.object({
-  Id: z.number(),
-  idDonoCarga: z.number(),
-  nome: z.string().min(3, "Mínimo de 3 caracteres"),
-  TipoPessoa: z.number(),
-  CPF: z.string().refine(isValidCpf, "CPF inválido").or(z.literal("")),
-  CNPJ: z.string().refine(isValidCnpj, "CNPJ inválido").or(z.literal("")),
-  InscricaoEstadual: z.number(),
-  Endereco: z.object({
-    id: z.number(),
-    logradouro: z.string(),
-    cep: z.string().regex(/[0-9]{5}-[0-9]{3}/, "CEP inválido"),
-    bairro: z.string(),
-    numero: z.string().min(1, "Número inválido"),
-    CodCidadeIBGE: z.number(),
-    complemento: z.string(),
-    lat: z.number(),
-    lng: z.number(),
-    cidade: z.string(),
-    estado: z.string(),
-    nomeEstado: z.string(),
-  }),
-});
+const invalidCpfMessage = "CPF inválido";
+const invalidCnpjMessage = "CNPJ inválido";
+
+const schema = z
+  .object({
+    Id: z.number(),
+    idDonoCarga: z.number(),
+    nome: z.string().min(3, "Mínimo de 3 caracteres"),
+    TipoPessoa: z.custom().transform(Number),
+    CPF: z.string().refine(isValidCpf, invalidCpfMessage).or(z.literal("")),
+    CNPJ: z.string().refine(isValidCnpj, invalidCnpjMessage).or(z.literal("")),
+    InscricaoEstadual: z.custom().transform(Number),
+    Endereco: z.object({
+      id: z.number(),
+      logradouro: z.string(),
+      cep: z.string().regex(/[0-9]{5}-[0-9]{3}/, "CEP inválido"),
+      bairro: z.string(),
+      numero: z.string().min(1, "Número inválido"),
+      CodCidadeIBGE: z.number(),
+      complemento: z.string(),
+      lat: z.number(),
+      lng: z.number(),
+      cidade: z.string(),
+      estado: z.string(),
+      nomeEstado: z.string(),
+    }),
+  })
+  .refine(
+    (data) => {
+      if (data.TipoPessoa === 2) {
+        return true;
+      }
+
+      return data.TipoPessoa === 1 && data.CPF !== "";
+    },
+    {
+      message: invalidCpfMessage,
+      path: ["CPF"],
+    }
+  )
+  .refine(
+    (data) => {
+      if (data.TipoPessoa === 1) {
+        return true;
+      }
+
+      return data.TipoPessoa === 2 && data.CNPJ !== "";
+    },
+    {
+      message: invalidCnpjMessage,
+      path: ["CNPJ"],
+    }
+  );
 
 export type FormSchema = z.infer<typeof schema>;
 
@@ -92,6 +122,16 @@ export function TerminalForm({ data, loading, onValid }: Props) {
     lat: formData.Endereco.lat ?? 0,
     lng: formData.Endereco.lng ?? 0,
   };
+
+  useEffect(() => {
+    if (formData.TipoPessoa == 1) {
+      form.setValue("CNPJ", "");
+    }
+
+    if (formData.TipoPessoa == 2) {
+      form.setValue("CPF", "");
+    }
+  }, [formData.TipoPessoa]);
 
   useEffect(() => {
     if (formData.Endereco.cep.at(-1) !== "_") {
@@ -233,7 +273,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
             <Stack gap="1rem">
               <Typography fontWeight={700}>Dados do Terminal</Typography>
 
-              <Stack gap="1rem" direction="row">
+              <Stack gap="1rem">
                 <Controller
                   name="nome"
                   control={form.control}
@@ -258,6 +298,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                     <TextField
                       id={field.name}
                       label="Inscrição estadual"
+                      type="number"
                       value={field.value}
                       onChange={field.onChange}
                       fullWidth
