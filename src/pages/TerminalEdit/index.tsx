@@ -2,6 +2,7 @@ import { Card, Container } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useSnackbar } from "notistack";
+import { BaseSyntheticEvent } from "react";
 import { useParams } from "react-router-dom";
 import { FormSchema, TerminalForm } from "../../components/TerminalForm";
 import { useOnGo } from "../../hooks/useOnGo";
@@ -20,8 +21,8 @@ export function TerminalEdit() {
 
   const updateMutation = updateTerminal();
 
-  function handleOnValid(data: FormSchema, e: any) {
-    e.preventDefault();
+  function handleOnValid(data: FormSchema, e?: BaseSyntheticEvent) {
+    e?.preventDefault();
 
     updateMutation.mutate(data, {
       onSuccess: () => {

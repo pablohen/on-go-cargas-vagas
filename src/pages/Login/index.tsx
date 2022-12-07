@@ -1,6 +1,7 @@
 import { Box, Card } from "@mui/material";
 import { AxiosError } from "axios";
 import { useSnackbar } from "notistack";
+import { BaseSyntheticEvent } from "react";
 import { FormSchema, LoginForm } from "../../components/LoginForm";
 import { useOnGo } from "../../hooks/useOnGo";
 
@@ -15,8 +16,8 @@ export function Login() {
 
   const loginMutation = login();
 
-  function handleOnValid(data: FormSchema, e: any) {
-    e.preventDefault();
+  function handleOnValid(data: FormSchema, e?: BaseSyntheticEvent) {
+    e?.preventDefault();
 
     loginMutation.mutate(
       {

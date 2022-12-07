@@ -1,6 +1,7 @@
 import { Card, Container } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 import { useSnackbar } from "notistack";
+import { BaseSyntheticEvent } from "react";
 import { FormSchema, TerminalForm } from "../../components/TerminalForm";
 import { useOnGo } from "../../hooks/useOnGo";
 
@@ -11,8 +12,8 @@ export function TerminalCreate() {
 
   const createMutation = createTerminal();
 
-  function handleOnValid(data: FormSchema, e: any) {
-    e.preventDefault();
+  function handleOnValid(data: FormSchema, e?: BaseSyntheticEvent) {
+    e?.preventDefault();
 
     createMutation.mutate(data, {
       onSuccess: () => {

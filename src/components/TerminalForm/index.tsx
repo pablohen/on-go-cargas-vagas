@@ -12,7 +12,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { BaseSyntheticEvent, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import InputMask from "react-input-mask";
 import { z } from "zod";
@@ -102,7 +102,7 @@ export const initialValues: FormSchema = {
 interface Props {
   data?: UpsertTerminal;
   loading: boolean;
-  onValid: (data: FormSchema, e: any) => void;
+  onValid: (data: FormSchema, e?: BaseSyntheticEvent) => void;
 }
 
 export function TerminalForm({ data, loading, onValid }: Props) {

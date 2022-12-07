@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LockOutlined } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Stack, TextField } from "@mui/material";
-import { useEffect } from "react";
+import { BaseSyntheticEvent, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
@@ -23,7 +23,7 @@ export const initialValues: FormSchema = {
 interface Props {
   data?: FormSchema;
   loading: boolean;
-  onValid: (data: FormSchema, e: any) => void;
+  onValid: (data: FormSchema, e?: BaseSyntheticEvent) => void;
 }
 
 export function LoginForm({ data, loading, onValid }: Props) {
