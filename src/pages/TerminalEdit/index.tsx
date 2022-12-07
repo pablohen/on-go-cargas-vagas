@@ -1,4 +1,5 @@
 import { Card, Container } from "@mui/material";
+import { useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useSnackbar } from "notistack";
 import { useParams } from "react-router-dom";
@@ -9,6 +10,7 @@ import { mapTerminalToUpsertTerminal } from "../../utils";
 export function TerminalEdit() {
   const { getTerminal, updateTerminal } = useOnGo();
   const { enqueueSnackbar } = useSnackbar();
+  const queryClient = useQueryClient();
 
   const { id } = useParams() as { id: string };
 
@@ -23,6 +25,8 @@ export function TerminalEdit() {
 
     updateMutation.mutate(data, {
       onSuccess: () => {
+        queryClient.invalidateQueries(["terminal"]);
+
         enqueueSnackbar("Terminal atualizado", {
           variant: "success",
         });

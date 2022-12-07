@@ -1,4 +1,5 @@
 import { Card, Container } from "@mui/material";
+import { useQueryClient } from "@tanstack/react-query";
 import { useSnackbar } from "notistack";
 import { FormSchema, TerminalForm } from "../../components/TerminalForm";
 import { useOnGo } from "../../hooks/useOnGo";
@@ -6,6 +7,7 @@ import { useOnGo } from "../../hooks/useOnGo";
 export function TerminalCreate() {
   const { createTerminal } = useOnGo();
   const { enqueueSnackbar } = useSnackbar();
+  const queryClient = useQueryClient();
 
   const createMutation = createTerminal();
 
@@ -14,6 +16,8 @@ export function TerminalCreate() {
 
     createMutation.mutate(data, {
       onSuccess: () => {
+        queryClient.invalidateQueries(["terminal"]);
+
         enqueueSnackbar("Terminal cadastrado", {
           variant: "success",
         });
