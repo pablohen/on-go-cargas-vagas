@@ -73,7 +73,7 @@ export function TerminalTable({
       autoHeight
       filterMode="server"
       paginationMode="server"
-      loading={!result}
+      loading={!data}
       disableColumnFilter
       disableDensitySelector
       disableSelectionOnClick
