@@ -4,10 +4,10 @@ import { Header } from "../../components/Header";
 import { useOnGo } from "../../hooks/useOnGo";
 
 export function ProtectedPages() {
-  const { user, logout } = useOnGo();
+  const { user, logout, isExpired } = useOnGo();
 
   useEffect(() => {
-    if (!user) {
+    if (!user || isExpired) {
       logout();
     }
   }, [user]);

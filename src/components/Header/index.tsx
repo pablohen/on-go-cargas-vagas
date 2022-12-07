@@ -1,6 +1,7 @@
-import { AccountCircle, Logout as LogoutIcon } from "@mui/icons-material";
+import { Logout as LogoutIcon } from "@mui/icons-material";
 import {
   AppBar,
+  Avatar,
   Button,
   Container,
   IconButton,
@@ -9,6 +10,7 @@ import {
   MenuItem,
   Toolbar,
   Typography,
+  useTheme,
 } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -16,8 +18,9 @@ import { useOnGo } from "../../hooks/useOnGo";
 import { BreadcrumbList } from "../BreadcrumbList";
 
 export function Header() {
-  const { user, logout } = useOnGo();
+  const { user, logout, decodedToken } = useOnGo();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const theme = useTheme();
 
   function handleLogout() {
     logout();
@@ -58,7 +61,7 @@ export function Header() {
                 onClick={handleMenu}
                 color="inherit"
               >
-                <AccountCircle alphabetic="On Go Cargas" />
+                <Avatar>{decodedToken?.client_id.at(0)?.toUpperCase()}</Avatar>
               </IconButton>
               <Menu
                 id="menu-appbar"

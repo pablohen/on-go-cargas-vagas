@@ -1,9 +1,11 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSnackbar } from "notistack";
+import { useJwt } from "react-jwt";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
-import { api, subscriptionKey } from "../apis/onGoCargas";
+import { api } from "../apis/onGoCargas";
 import { Auth } from "../types/Auth";
+import { AuthToken } from "../types/AuthToken";
 import { Result as TerminalResult } from "../types/Terminal";
 import { Result as TerminalsResult } from "../types/Terminals";
 import { UpsertTerminal } from "../types/UpsertTerminal";
@@ -31,6 +33,9 @@ interface GetTerminal {
 
 export function useOnGo() {
   const [user, setUser] = useLocalStorage<Auth | null>("user", null);
+  const { decodedToken, isExpired } = useJwt<AuthToken>(
+    user?.access_token as string
+  );
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -71,7 +76,7 @@ export function useOnGo() {
           },
           headers: {
             Authorization: `Bearer ${user?.access_token}`,
-            "Ocp-Apim-Subscription-Key": subscriptionKey,
+            "Ocp-Apim-Subscription-Key": decodedToken?.OcpApimSubscriptionKey,
           },
         }
       );
@@ -82,7 +87,9 @@ export function useOnGo() {
     return useQuery({
       queryKey: ["terminal", ...Object.values(data)],
       queryFn: query,
-      enabled: Boolean(user?.access_token),
+      enabled:
+        Boolean(user?.access_token) &&
+        Boolean(decodedToken?.OcpApimSubscriptionKey),
     });
   }
 
@@ -94,7 +101,7 @@ export function useOnGo() {
           params: { id },
           headers: {
             Authorization: `Bearer ${user?.access_token}`,
-            "Ocp-Apim-Subscription-Key": subscriptionKey,
+            "Ocp-Apim-Subscription-Key": decodedToken?.OcpApimSubscriptionKey,
           },
         }
       );
@@ -105,7 +112,10 @@ export function useOnGo() {
     return useQuery({
       queryKey: ["terminal", id],
       queryFn: query,
-      enabled: Boolean(id) && Boolean(user?.access_token),
+      enabled:
+        Boolean(id) &&
+        Boolean(user?.access_token) &&
+        Boolean(decodedToken?.OcpApimSubscriptionKey),
     });
   }
 
@@ -117,7 +127,7 @@ export function useOnGo() {
         {
           headers: {
             Authorization: `Bearer ${user?.access_token}`,
-            "Ocp-Apim-Subscription-Key": subscriptionKey,
+            "Ocp-Apim-Subscription-Key": decodedToken?.OcpApimSubscriptionKey,
           },
         }
       );
@@ -138,7 +148,7 @@ export function useOnGo() {
         {
           headers: {
             Authorization: `Bearer ${user?.access_token}`,
-            "Ocp-Apim-Subscription-Key": subscriptionKey,
+            "Ocp-Apim-Subscription-Key": decodedToken?.OcpApimSubscriptionKey,
           },
         }
       );
@@ -160,5 +170,7 @@ export function useOnGo() {
     updateTerminal,
     user,
     setUser,
+    decodedToken,
+    isExpired,
   };
 }
