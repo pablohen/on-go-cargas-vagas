@@ -1,4 +1,7 @@
-import { Logout as LogoutIcon } from "@mui/icons-material";
+import {
+  Logout as LogoutIcon,
+  Person as PersonIcon,
+} from "@mui/icons-material";
 import {
   AppBar,
   Avatar,
@@ -10,17 +13,18 @@ import {
   MenuItem,
   Toolbar,
   Typography,
-  useTheme,
 } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useToggle } from "usehooks-ts";
 import { useOnGo } from "../../hooks/useOnGo";
 import { BreadcrumbList } from "../BreadcrumbList";
+import { UserInfoModal } from "../UserInfoModal";
 
 export function Header() {
   const { user, logout, decodedToken } = useOnGo();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const theme = useTheme();
+  const [userInfoIsOpen, toggleUserInfoIsOpen] = useToggle();
 
   function handleLogout() {
     logout();
@@ -78,11 +82,18 @@ export function Header() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
+                <MenuItem onClick={toggleUserInfoIsOpen}>
+                  <ListItemIcon>
+                    <PersonIcon fontSize="small" />
+                  </ListItemIcon>
+                  Minha conta
+                </MenuItem>
+
                 <MenuItem onClick={handleLogout}>
                   <ListItemIcon>
                     <LogoutIcon fontSize="small" />
                   </ListItemIcon>
-                  Logout
+                  Sair
                 </MenuItem>
               </Menu>
             </div>
@@ -93,6 +104,8 @@ export function Header() {
       <Container>
         <BreadcrumbList />
       </Container>
+
+      <UserInfoModal open={userInfoIsOpen} onClose={toggleUserInfoIsOpen} />
     </>
   );
 }
