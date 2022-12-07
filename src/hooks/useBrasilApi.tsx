@@ -12,13 +12,15 @@ export function useBrasilApi() {
   const { enqueueSnackbar } = useSnackbar();
 
   function getAddressByCep({ cep }: GetAddressByCep) {
-    async function getter() {
+    async function query() {
       const res = await api.get<Address>(`/cep/v2/${cep}`);
 
       return res.data;
     }
 
-    return useQuery(["cep", cep], () => getter(), {
+    return useQuery({
+      queryKey: ["cep", cep],
+      queryFn: query,
       enabled: Boolean(cep),
       onSuccess: () => {
         enqueueSnackbar("Endereço preenchido automaticamente com base no CEP", {
