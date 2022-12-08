@@ -12,14 +12,18 @@ import { useNavigate } from "react-router-dom";
 import { Result } from "../../types/Terminals";
 
 interface Props {
-  data?: Result;
+  data: Result | undefined;
+  rowsPerPage: number[];
   handleOnPageChange: (page: number) => void;
+  handleOnPageSizeChange: (pageSize: number) => void;
   handleFilterChange: (filterModel: GridFilterModel) => void;
 }
 
 export function TerminalTable({
   data,
+  rowsPerPage,
   handleOnPageChange,
+  handleOnPageSizeChange,
   handleFilterChange,
 }: Props) {
   const navigate = useNavigate();
@@ -62,6 +66,7 @@ export function TerminalTable({
       columns={columns}
       rowCount={data?.data.totalResult ?? 0}
       pageSize={data?.data.pageSize ?? 0}
+      rowsPerPageOptions={rowsPerPage}
       autoHeight
       filterMode="server"
       paginationMode="server"
@@ -77,6 +82,7 @@ export function TerminalTable({
         },
       }}
       onPageChange={handleOnPageChange}
+      onPageSizeChange={handleOnPageSizeChange}
       onFilterModelChange={handleFilterChange}
       checkboxSelection={false}
       sx={{ border: 0 }}

@@ -21,6 +21,10 @@ export function TerminalList() {
     setOptions({ ...options, pageIndex: page });
   }
 
+  function handleOnPageSizeChange(pageSize: number) {
+    setOptions({ ...options, pageSize });
+  }
+
   function handleFilterChange(filterModel: GridFilterModel) {
     if (!filterModel.quickFilterValues?.length) {
       return setOptions({ ...options, pesquisa: "" });
@@ -52,7 +56,9 @@ export function TerminalList() {
 
           <TerminalTable
             data={terminalsQuery.data}
+            rowsPerPage={options.rowsPerPage}
             handleOnPageChange={handleOnPageChange}
+            handleOnPageSizeChange={handleOnPageSizeChange}
             handleFilterChange={handleFilterChange}
           />
         </Stack>

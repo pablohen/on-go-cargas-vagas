@@ -19,12 +19,14 @@ export interface PaginationOptions {
   pageSize: number;
   pageIndex: number;
   pesquisa: string;
+  rowsPerPage: number[];
 }
 
 export const initialOptions: PaginationOptions = {
   pageIndex: 0,
   pageSize: 10,
   pesquisa: "",
+  rowsPerPage: [10, 25, 50, 100],
 };
 
 interface GetTerminal {
