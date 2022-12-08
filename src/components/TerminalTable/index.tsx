@@ -8,7 +8,6 @@ import {
   GridRowsProp,
   GridToolbar,
 } from "@mui/x-data-grid";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Result } from "../../types/Terminals";
 
@@ -24,9 +23,8 @@ export function TerminalTable({
   handleFilterChange,
 }: Props) {
   const navigate = useNavigate();
-  const [result, setResult] = useState<Result>();
 
-  const terminals = result?.data.data;
+  const terminals = data?.data.data;
 
   const rows: GridRowsProp = terminals
     ? terminals.map((terminal) => ({
@@ -58,18 +56,12 @@ export function TerminalTable({
     { field: "actions", headerName: "Ações", renderCell: renderActionsCell },
   ];
 
-  useEffect(() => {
-    if (data) {
-      setResult(data);
-    }
-  }, [data]);
-
   return (
     <DataGrid
       rows={rows}
       columns={columns}
-      rowCount={result?.data.totalResult}
-      pageSize={result?.data.pageSize}
+      rowCount={data?.data.totalResult ?? 0}
+      pageSize={data?.data.pageSize ?? 0}
       autoHeight
       filterMode="server"
       paginationMode="server"
