@@ -20,17 +20,14 @@ import { useBrasilApi } from "../../hooks/useBrasilApi";
 import { UpsertTerminal } from "../../types/UpsertTerminal";
 import { TerminalMap } from "../TerminalMap";
 
-const invalidCpfMessage = "CPF inválido";
-const invalidCnpjMessage = "CNPJ inválido";
-
 const schema = z
   .object({
     Id: z.number(),
     idDonoCarga: z.number(),
     nome: z.string().min(3, "Mínimo de 3 caracteres"),
     TipoPessoa: z.custom().transform(Number),
-    CPF: z.string().refine(isValidCpf, invalidCpfMessage).or(z.literal("")),
-    CNPJ: z.string().refine(isValidCnpj, invalidCnpjMessage).or(z.literal("")),
+    CPF: z.string(),
+    CNPJ: z.string(),
     InscricaoEstadual: z.custom().transform(Number),
     Endereco: z.object({
       id: z.number(),
@@ -53,10 +50,10 @@ const schema = z
         return true;
       }
 
-      return data.TipoPessoa === 1 && data.CPF !== "";
+      return data.TipoPessoa === 1 && isValidCpf(data.CPF);
     },
     {
-      message: invalidCpfMessage,
+      message: "CPF inválido",
       path: ["CPF"],
     }
   )
@@ -66,10 +63,10 @@ const schema = z
         return true;
       }
 
-      return data.TipoPessoa === 2 && data.CNPJ !== "";
+      return data.TipoPessoa === 2 && isValidCnpj(data.CNPJ);
     },
     {
-      message: invalidCnpjMessage,
+      message: "CNPJ inválido",
       path: ["CNPJ"],
     }
   );
