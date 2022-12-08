@@ -13,8 +13,8 @@ export function TerminalList() {
 
   const navigate = useNavigate();
 
-  function handleOnPageChange(pageIndex: number) {
-    setOptions({ ...options, pageIndex: pageIndex + 1 });
+  function handleOnPageChange(page: number) {
+    setOptions({ ...options, pageIndex: page });
   }
 
   function handleFilterChange(filterModel: GridFilterModel) {
