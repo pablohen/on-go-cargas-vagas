@@ -4,11 +4,15 @@ import { GridFilterModel } from "@mui/x-data-grid";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TerminalTable } from "../../components/TerminalTable";
-import { initialState, PaginationOptions, useOnGo } from "../../hooks/useOnGo";
+import {
+  initialOptions,
+  PaginationOptions,
+  useOnGo,
+} from "../../hooks/useOnGo";
 
 export function TerminalList() {
   const { getTerminals } = useOnGo();
-  const [options, setOptions] = useState<PaginationOptions>(initialState);
+  const [options, setOptions] = useState<PaginationOptions>(initialOptions);
   const terminalsQuery = getTerminals(options);
 
   const navigate = useNavigate();

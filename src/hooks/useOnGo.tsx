@@ -21,7 +21,7 @@ export interface PaginationOptions {
   pesquisa: string;
 }
 
-export const initialState: PaginationOptions = {
+export const initialOptions: PaginationOptions = {
   pageIndex: 0,
   pageSize: 10,
   pesquisa: "",
