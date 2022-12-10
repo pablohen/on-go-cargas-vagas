@@ -55,8 +55,8 @@ export function Login() {
     >
       <Card
         sx={{
-          padding: "1rem",
-          width: "20rem",
+          padding: (theme) => theme.spacing(2),
+          width: (theme) => theme.spacing(40),
         }}
       >
         <LoginForm

@@ -33,7 +33,7 @@ export function UserInfoModal({ open, onClose }: Props) {
         <Box
           sx={{
             display: "flex",
-            gap: "1rem",
+            gap: (theme) => theme.spacing(2),
             flexDirection: "column",
             alignItems: "center",
             [theme.breakpoints.up("sm")]: {
@@ -47,12 +47,12 @@ export function UserInfoModal({ open, onClose }: Props) {
           </Avatar>
 
           <Box>
-            <Box sx={{ display: "flex", gap: "0.5rem" }}>
+            <Box sx={{ display: "flex", gap: (theme) => theme.spacing(1) }}>
               <Typography fontWeight="bold">Nome: </Typography>
               <Typography>{decodedToken?.client_id}</Typography>
             </Box>
 
-            <Box sx={{ display: "flex", gap: "0.5rem" }}>
+            <Box sx={{ display: "flex", gap: (theme) => theme.spacing(1) }}>
               <Typography fontWeight="bold">Empresa: </Typography>
               <Typography>{decodedToken?.identificador_empresa}</Typography>
             </Box>

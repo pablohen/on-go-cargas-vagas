@@ -41,8 +41,8 @@ export function TerminalCreate() {
   }
 
   return (
-    <Container sx={{ pb: "1rem" }}>
-      <Card sx={{ p: "1rem" }}>
+    <Container sx={{ pb: (theme) => theme.spacing(2) }}>
+      <Card sx={{ p: (theme) => theme.spacing(2) }}>
         <TerminalForm
           loading={createMutation.isLoading}
           onValid={handleOnValid}

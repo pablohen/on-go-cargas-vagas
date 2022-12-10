@@ -180,10 +180,10 @@ export function TerminalForm({ data, loading, onValid }: Props) {
 
   return (
     <form onSubmit={form.handleSubmit(onValid, console.log)}>
-      <Stack gap="2rem">
+      <Stack gap={4}>
         <Grid container spacing={2}>
           <Grid item xs={12} lg={6}>
-            <Stack gap="1rem">
+            <Stack gap={2}>
               <Typography fontWeight={700}>Dados do Responsável</Typography>
 
               <Controller
@@ -267,10 +267,10 @@ export function TerminalForm({ data, loading, onValid }: Props) {
           </Grid>
 
           <Grid item xs={12} lg={6}>
-            <Stack gap="1rem">
+            <Stack gap={2}>
               <Typography fontWeight={700}>Dados do Terminal</Typography>
 
-              <Stack gap="1rem">
+              <Stack gap={2}>
                 <Controller
                   name="nome"
                   control={form.control}
@@ -312,7 +312,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
 
         <Grid container spacing={2}>
           <Grid item xs={12} lg={6}>
-            <Stack gap="1rem">
+            <Stack gap={2}>
               <Typography fontWeight={700}>Endereço</Typography>
 
               <Controller
@@ -336,7 +336,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                 )}
               />
 
-              <Stack gap="1rem" direction="row">
+              <Stack gap={2} direction="row">
                 <Controller
                   name="Endereco.logradouro"
                   control={form.control}
@@ -373,7 +373,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                 />
               </Stack>
 
-              <Stack gap="1rem" direction="row">
+              <Stack gap={2} direction="row">
                 <Controller
                   name="Endereco.complemento"
                   control={form.control}
@@ -410,7 +410,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                 />
               </Stack>
 
-              <Stack gap="1rem" direction="row">
+              <Stack gap={2} direction="row">
                 <Controller
                   name="Endereco.cidade"
                   control={form.control}
@@ -447,7 +447,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                 />
               </Stack>
 
-              <Stack gap="1rem" direction="row">
+              <Stack gap={2} direction="row">
                 <Controller
                   name="Endereco.estado"
                   control={form.control}
@@ -485,7 +485,7 @@ export function TerminalForm({ data, loading, onValid }: Props) {
                 />
               </Stack>
 
-              <Stack gap="1rem" direction="row">
+              <Stack gap={2} direction="row">
                 <Controller
                   name="Endereco.lat"
                   control={form.control}

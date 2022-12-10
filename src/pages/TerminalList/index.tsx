@@ -35,9 +35,9 @@ export function TerminalList() {
   }
 
   return (
-    <Container sx={{ pb: "1rem" }}>
-      <Card sx={{ p: "1rem" }}>
-        <Stack gap="1rem">
+    <Container sx={{ pb: (theme) => theme.spacing(2) }}>
+      <Card sx={{ p: (theme) => theme.spacing(2) }}>
+        <Stack gap={2}>
           <Box
             sx={{
               display: "flex",

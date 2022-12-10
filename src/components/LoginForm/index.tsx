@@ -50,7 +50,7 @@ export function LoginForm({ data, loading, onValid }: Props) {
 
   return (
     <form onSubmit={form.handleSubmit(onValid, console.log)}>
-      <Stack spacing="1rem">
+      <Stack spacing={2}>
         <Box
           sx={{
             display: "flex",

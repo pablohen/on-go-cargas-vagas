@@ -30,7 +30,7 @@ export function TerminalMap({ center, title }: Props) {
             borderRadius: theme.shape.borderRadius,
             display: "flex",
             flexGrow: 1,
-            minHeight: "20rem",
+            minHeight: theme.spacing(40),
           }}
           zoom={14}
           center={center}

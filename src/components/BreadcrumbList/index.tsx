@@ -10,7 +10,7 @@ export function BreadcrumbList() {
     <Breadcrumbs
       aria-label="breadcrumb"
       sx={{
-        py: "1rem",
+        py: (theme) => theme.spacing(2),
       }}
     >
       {matchesWithHandle.map((item) => (
