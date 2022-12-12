@@ -6,10 +6,10 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Typography,
   useTheme,
 } from "@mui/material";
 import { useOnGo } from "../../hooks/useOnGo";
+import { Property } from "../Property";
 
 interface Props {
   open: boolean;
@@ -47,15 +47,11 @@ export function UserInfoModal({ open, onClose }: Props) {
           </Avatar>
 
           <Box>
-            <Box sx={{ display: "flex", gap: (theme) => theme.spacing(1) }}>
-              <Typography fontWeight="bold">Nome: </Typography>
-              <Typography>{decodedToken?.client_id}</Typography>
-            </Box>
-
-            <Box sx={{ display: "flex", gap: (theme) => theme.spacing(1) }}>
-              <Typography fontWeight="bold">Empresa: </Typography>
-              <Typography>{decodedToken?.identificador_empresa}</Typography>
-            </Box>
+            <Property label="Nome:" value={decodedToken?.client_id} />
+            <Property
+              label="ID_Empresa:"
+              value={decodedToken?.identificador_empresa}
+            />
           </Box>
         </Box>
       </DialogContent>
