@@ -1,10 +1,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LockOutlined } from "@mui/icons-material";
+import {
+  LockOutlined as LockOutlinedIcon,
+  Visibility as VisibilityIcon,
+  VisibilityOff as VisibilityOffIcon,
+} from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Box, Stack, TextField } from "@mui/material";
+import { Box, InputAdornment, Stack, TextField } from "@mui/material";
 import { BaseSyntheticEvent, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useToggle } from "usehooks-ts";
 import { z } from "zod";
 import { useOnGo } from "../../hooks/useOnGo";
 
@@ -29,6 +34,7 @@ interface Props {
 export function LoginForm({ data, loading, onValid }: Props) {
   const navigate = useNavigate();
   const { user } = useOnGo();
+  const [showPassword, toggleShowPassword] = useToggle();
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(schema),
@@ -57,7 +63,7 @@ export function LoginForm({ data, loading, onValid }: Props) {
             justifyContent: "center",
           }}
         >
-          <LockOutlined />
+          <LockOutlinedIcon />
         </Box>
 
         <Controller
@@ -83,7 +89,18 @@ export function LoginForm({ data, loading, onValid }: Props) {
             <TextField
               id="password"
               label="Senha"
-              type="password"
+              type={showPassword ? "text" : "password"}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end" sx={{ cursor: "pointer" }}>
+                    {showPassword ? (
+                      <VisibilityIcon onClick={toggleShowPassword} />
+                    ) : (
+                      <VisibilityOffIcon onClick={toggleShowPassword} />
+                    )}
+                  </InputAdornment>
+                ),
+              }}
               value={field.value}
               onChange={field.onChange}
               inputRef={field.ref}
