@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import { Header } from "../../components/Header";
 import { useOnGo } from "../../hooks/useOnGo";
 
-export function ProtectedPages() {
+export default function ProtectedPages() {
   const { user, logout, isExpired } = useOnGo();
 
   useEffect(() => {

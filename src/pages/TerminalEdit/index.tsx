@@ -8,7 +8,7 @@ import { FormSchema, TerminalForm } from "../../components/TerminalForm";
 import { useOnGo } from "../../hooks/useOnGo";
 import { mapTerminalToUpsertTerminal } from "../../utils";
 
-export function TerminalEdit() {
+export default function TerminalEdit() {
   const { getTerminal, updateTerminal } = useOnGo();
   const { enqueueSnackbar } = useSnackbar();
   const queryClient = useQueryClient();

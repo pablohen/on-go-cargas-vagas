@@ -1,16 +1,19 @@
-import { Container, Typography } from "@mui/material";
+import { lazy, Suspense } from "react";
 import { createBrowserRouter, RouteObject } from "react-router-dom";
-import { ProtectedPages } from "../layouts/ProtectedPages";
-import { Login } from "../pages/Login";
-import { TerminalCreate } from "../pages/TerminalCreate";
-import { TerminalEdit } from "../pages/TerminalEdit";
-import { TerminalList } from "../pages/TerminalList";
+import { Fallback } from "../components/Fallback";
+
+const LazyLogin = lazy(() => import("../pages/Login"));
+const LazyTerminalList = lazy(() => import("../pages/TerminalList"));
+const LazyTerminalCreate = lazy(() => import("../pages/TerminalCreate"));
+const LazyTerminalEdit = lazy(() => import("../pages/TerminalEdit"));
+const LazyNotFound = lazy(() => import("../pages/NotFound"));
+const LazyProtectedPages = lazy(() => import("../layouts/ProtectedPages"));
 
 const terminalRoutes = [
-  { path: "", element: <TerminalList /> },
-  { path: "new", element: <TerminalCreate />, handle: "Novo" },
+  { path: "", element: <LazyTerminalList /> },
+  { path: "new", element: <LazyTerminalCreate />, handle: "Novo" },
   ,
-  { path: "edit/:id", element: <TerminalEdit />, handle: "Editar" },
+  { path: "edit/:id", element: <LazyTerminalEdit />, handle: "Editar" },
 ] as RouteObject[];
 
 export const router = createBrowserRouter([
@@ -19,25 +22,36 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Login />,
+        element: (
+          <Suspense fallback={<Fallback />}>
+            <LazyLogin />
+          </Suspense>
+        ),
       },
       {
         path: "login",
-        element: <Login />,
+        element: (
+          <Suspense fallback={<Fallback />}>
+            <LazyLogin />
+          </Suspense>
+        ),
       },
       {
         path: "terminals",
         handle: "Terminais",
-        element: <ProtectedPages />,
+        element: (
+          <Suspense fallback={<Fallback />}>
+            <LazyProtectedPages />
+          </Suspense>
+        ),
         children: terminalRoutes,
       },
       {
         path: "*",
         element: (
-          <Container>
-            <Typography variant="h4">404</Typography>
-            <Typography variant="h6">Not found</Typography>
-          </Container>
+          <Suspense fallback={<Fallback />}>
+            <LazyNotFound />
+          </Suspense>
         ),
       },
     ],

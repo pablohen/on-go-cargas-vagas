@@ -10,7 +10,7 @@ import {
   useOnGo,
 } from "../../hooks/useOnGo";
 
-export function TerminalList() {
+export default function TerminalList() {
   const { getTerminals } = useOnGo();
   const [options, setOptions] = useState<PaginationOptions>(initialOptions);
   const terminalsQuery = getTerminals(options);

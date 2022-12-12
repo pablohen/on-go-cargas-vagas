@@ -5,7 +5,7 @@ import { BaseSyntheticEvent } from "react";
 import { FormSchema, TerminalForm } from "../../components/TerminalForm";
 import { useOnGo } from "../../hooks/useOnGo";
 
-export function TerminalCreate() {
+export default function TerminalCreate() {
   const { createTerminal } = useOnGo();
   const { enqueueSnackbar } = useSnackbar();
   const queryClient = useQueryClient();

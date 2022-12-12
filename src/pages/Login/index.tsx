@@ -10,7 +10,7 @@ const demoUser: FormSchema = {
   password: "Vagas1a2b",
 };
 
-export function Login() {
+export default function Login() {
   const { enqueueSnackbar } = useSnackbar();
   const { login, setUser } = useOnGo();
 
